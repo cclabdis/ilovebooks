@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model books {
+model Book {
   id           Int      @id @default(autoincrement())
   title        String
   author       String
@@ -16,4 +16,7 @@ model books {
   read         Boolean  @default(false)
   grade        Int?
   review       String?
+  cover        String
+
+  @@map("books")
 }

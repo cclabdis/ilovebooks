@@ -4,14 +4,14 @@ import prisma from "./../database/index";
 
 export async function getBooks() {
 
-  const result = await prisma.books.findMany()
+  const result = await prisma.book.findMany()
 
   return result;
 }
 
 export async function getBook(id: number) {
 
-  const result = await prisma.books.findFirst({
+  const result = await prisma.book.findFirst({
     where: {
       id
     }
@@ -19,27 +19,20 @@ export async function getBook(id: number) {
   return result;
 }
 
-
 export async function createBook(book: CreateBook) {
-  const { title, author, publisher, purchaseDate } = book;
-
-  const result = await prisma.books.create({
-    data: {
-      title,
-      author,
-      publisher,
-      purchaseDate
-    }
+  const date = new Date(book.purchaseDate)
+  const result = await prisma.book.create({
+    data: { 
+      ...book, 
+      purchaseDate: date }
   })
-
   return result;
 }
-
 
 export async function reviewBook(bookReview: CreateReview) {
   const { bookId, grade, review } = bookReview;
 
-  const result = await prisma.books.update({
+  const result = await prisma.book.update({
     data: {
       grade,
       review,
